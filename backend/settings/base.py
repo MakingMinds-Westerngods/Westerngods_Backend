@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # user defined
     'accounts',
     'masters',
+    'inventory',
 ]
 
 MIDDLEWARE = [
@@ -73,6 +74,7 @@ MIDDLEWARE = [
 LOGGING_MODELS = (
     'accounts',
     'masters',
+    'inventory',
 )
 
 LOGGING_EXCLUDE = (
