@@ -26,6 +26,6 @@ dotenv.load_dotenv()
 
 urlpatterns = [
     path('admin_api/', include('accounts.urls')),
-    # path('masters/', include('masters.urls')),
+    path('masters/', include('masters.urls')),
     path(os.getenv('SECRET_ADMIN_URL') + 'admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
