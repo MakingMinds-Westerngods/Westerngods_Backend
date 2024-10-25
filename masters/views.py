@@ -361,8 +361,7 @@ class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
         obj = self.get_object()
         serializer = self.get_serializer(obj)
         output = serializer.data
-        output.update(
-            {"parent": {"label": obj.parent_category.name, "value": obj.parent_category.id}})
+        
         return Response(output, status=status.HTTP_200_OK)
 
     def put(self, request, *args, **kwargs):
