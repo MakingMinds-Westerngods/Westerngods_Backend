@@ -7,12 +7,14 @@ from datetime import datetime
 from custom.permissions import isAdmin
 from django.db import IntegrityError
 from rest_framework.permissions import AllowAny
-
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.conf import settings
 from .serializers import (BrandSerializer, UnitSerializer, SalesAccountSerializer,OfferSlideSerializer,GridItemSerializer,BannerSerializer,                       
                           PurchaseAccountSerializer, ManufacturerSerializer, CategorySerializer, CountrySerializer,
-                          StateSerializer, CitySerializer, DistrictSerializer)
+                          StateSerializer, CitySerializer, DistrictSerializer,ContactSerializer)
 from .models import (Manufacturer, Brand, Unit, SalesAccount, PurchaseAccount,Banner,OfferSlide,GridItem,
-                     Category, Country, State, District, City)
+                     Category, Country, State, District, City,Contact)
 
 
 class CountryView(generics.GenericAPIView):
@@ -847,3 +849,16 @@ class GridItemDetailView(generics.RetrieveUpdateDestroyAPIView):
             return Response({"error_detail": ["Item can't be deleted, as it is already in relation"]}, status=status.HTTP_423_LOCKED)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class ContactView(generics.GenericAPIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request, *args, **kwargs):
+        obj = request.data
+        contact = Contact.objects.create(**obj)
+        contact_seri = ContactSerializer(contact)
+        html_message = render_to_string('contact_message_preview.html', {
+            "name": contact.name, "phoneNumber": contact.phone, "message": contact.message, "email": contact.email})
+        send_mail(subject='New contact received', message='Welcome .. message is {}'.format(contact.message),
+                  html_message=html_message,
+                  from_email=settings.DEFAULT_FROM_EMAIL, recipient_list=['noreplymakingminds@gmail.com'])
+        return Response({"data": contact_seri.data}, status=status.HTTP_200_OK)

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import (Category, Brand, SalesAccount,Banner, PurchaseAccount, Manufacturer, Unit, Country, State,OfferSlide,GridItem,
-                     City, District)
+                     City, District,Contact)
 
 class CountrySerializer(serializers.ModelSerializer):
 
@@ -85,6 +85,7 @@ class GridItemSerializer(serializers.ModelSerializer):
         model = GridItem
         fields = '__all__'
         
-        
-
-        
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contact
+        fields = '__all__'
