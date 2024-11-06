@@ -2,7 +2,7 @@ from django.urls import path
 from .views import(CategoryListView,CategoryDetailView,ManufacturerDetailView,ManufacturerListView,BrandDetailView,BrandListView,SalesAccountDetailView,SalesAccountListView,
                    PurchaseAccountDetailView,PurchaseAccountListView,UnitListView,UnitDetailView, CountryView,OfferSlideListView,OfferSlideDetailView,
                    CountryDetailsView, StateView, StateDetailsView, DistrictView, DistrictDetailsView, CityView, CityDetailsView,
-                   BannerListView,BannerDetailView,GridItemListView,GridItemDetailView)
+                   BannerListView,BannerDetailView,GridItemListView,GridItemDetailView,ContactView)
 
 
 urlpatterns = [
@@ -44,6 +44,9 @@ urlpatterns = [
 
     path('grid_item/', GridItemListView.as_view()),
     path('grid_item/<int:pk>/', GridItemDetailView.as_view()),
+
+    path('contact/', ContactView.as_view()),
+
 
 ]
 
